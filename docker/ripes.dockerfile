@@ -20,9 +20,13 @@ ENV LC_ALL=C.UTF-8 SHELL=/bin/bash
 
 ARG BRANCH=master
 RUN git clone --recursive --branch ${BRANCH} https://github.com/mortbopet/Ripes.git /tmp/ripes \
-    && cmake -S /tmp/ripes/ -B /tmp/ripes/build -Wno-dev \
+    && cmake -S /tmp/ripes/ -B /tmp/ripes/build \
+    -Wno-dev -DRIPES_BUILD_TESTS=ON -DVSRTL_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release \
     && cmake --build /tmp/ripes/build \
-    && cd /tmp/ripes/build && make install \
+    && cd /tmp/ripes/build/test \
+    && ./tst_assembler && ./tst_expreval && ./tst_riscv \
+    && cd /tmp/ripes/build \
+    && make install \
     && cd /tmp \
     && rm -rf /tmp/ripes
 
