@@ -22,7 +22,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: "./docker/ripes.dockerfile"
+          file: "{{defaultContext}}:docker/docker/ripes.dockerfile"
           context: .
           push: true
           tags: matsievskiysv/ripes:latest
